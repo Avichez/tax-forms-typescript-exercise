@@ -1,5 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import {
@@ -13,9 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useDispatch } from "react-redux";
 import { selectClaimedListingById } from "../redux/listings";
+import { addSubmission } from "../redux/submissions";
 import { useAppSelector } from "../lib/useAppSelector";
 import { Submission } from "../lib/applicationTypes";
+import { requestExtension } from "../lib/api";
 
 type AppFieldProps = {
   label: string;
@@ -54,9 +57,26 @@ const ListingSchema = Yup.object().shape({
 
 export default function Listing() {
   const { id = null } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const listing = useAppSelector((state) =>
     selectClaimedListingById(state, id)
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmitExtension = async (values: Submission) => {
+    try {
+      setIsSubmitting(true);
+
+      const submittedData = await requestExtension(values);
+      dispatch(addSubmission(submittedData));
+      navigate("/submissions");
+    } catch (error) {
+      console.error("error submitting extension request:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (!listing) {
     return <Box>Listing was not found!</Box>;
@@ -76,7 +96,7 @@ export default function Listing() {
         <Formik
           initialValues={initialValues}
           validationSchema={ListingSchema}
-          onSubmit={() => {}}
+          onSubmit={handleSubmitExtension}
         >
           {({ errors }) => (
             <Form>
@@ -158,7 +178,11 @@ export default function Listing() {
               </Box>
 
               <Box sx={{ mt: 3 }}>
-                <Button variant="contained" type="submit">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
                   Submit Request
                 </Button>
               </Box>
