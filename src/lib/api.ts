@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import listingsData from "../data/listings.json";
 import statementData from "../data/statements.json";
-import { Listing, Submission } from "./applicationTypes";
+import { Listing, Statement, Submission } from "./applicationTypes";
 
 /*\
 |* !!IMPORTANT!!
@@ -41,9 +41,7 @@ export const requestExtension = (submission: Submission) => {
 let statementsApiState = statementData;
 
 export const loadStatements = () => {
-  return Promise.resolve(
-    statementsApiState as APIResponse<unknown>,
-  );
+  return Promise.resolve(statementsApiState as APIResponse<Statement>);
 };
 
 export const updateStatement = (updatedStatement: unknown) => {

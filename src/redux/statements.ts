@@ -15,17 +15,19 @@ const submissionsSlice = createSlice({
   name: "statements",
   initialState,
   reducers: {
+    initStatements: (state, action: PayloadAction<Statement[]>) => {
+      state.statements = action.payload;
+    },
     addStatement: (state, action: PayloadAction<Statement>) => {
       state.statements.push(action.payload);
     },
   },
 });
 
-export const { addStatement } = submissionsSlice.actions;
+export const { addStatement, initStatements } = submissionsSlice.actions;
 
 // Selectors
 
-export const selectStatements = ({ statements }: RootState) =>
-  statements.statements;
+export const selectStatements = ({ statements }: RootState) => statements.statements;
 
 export default submissionsSlice;

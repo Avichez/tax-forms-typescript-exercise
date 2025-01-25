@@ -21,26 +21,29 @@ export default function Home() {
     <Box>
       <AppBar position="static">
         <Container>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button
+              component={Link}
+              to={"/statements"}
+              sx={{ my: 2, color: "white", display: "block" }}>
+              My Statements
+            </Button>
             <Button
               component={Link}
               to={"/listings"}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
+              sx={{ my: 2, color: "white", display: "block" }}>
               Open Listings
             </Button>
             <Button
               component={Link}
               to={"/claimed"}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
+              sx={{ my: 2, color: "white", display: "block" }}>
               My Listings
             </Button>
             <Button
               component={Link}
               to={"/submissions"}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
+              sx={{ my: 2, color: "white", display: "block" }}>
               Submissions
             </Button>
           </Box>
@@ -50,3 +53,4 @@ export default function Home() {
     </Box>
   );
 }
+
