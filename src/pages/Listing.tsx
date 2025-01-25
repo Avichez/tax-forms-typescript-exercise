@@ -1,7 +1,16 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Formik, Form, useField } from "formik";
-import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  TextFieldProps,
+  Typography,
+} from "@mui/material";
 
 import { selectClaimedListingById } from "../redux/listings";
 import { useAppSelector } from "../lib/useAppSelector";
@@ -11,10 +20,8 @@ type AppFieldProps = {
   label: string;
   name: string;
 
-  // This line allows you to pass any styling options to the MaterialUI text
-  // field that are allowed by TextField.
-  sx?: ComponentProps<typeof TextField>["sx"];
-}
+  // Extend by TextFieldProps to use all available text field props
+} & TextFieldProps;
 
 // AppField is mostly a simple wrapper around MaterialUI's TextField, but
 // hooks into Formik. Just saves us allot of typing.
@@ -22,6 +29,7 @@ const AppField: React.FC<AppFieldProps> = ({
   label,
   name,
   sx,
+  ...restFieldProps
 }) => {
   const [field] = useField(name);
   const value = field.value || "";
@@ -33,6 +41,7 @@ const AppField: React.FC<AppFieldProps> = ({
       id={name}
       label={label}
       sx={sx}
+      {...restFieldProps}
       {...field}
     />
   );
@@ -40,12 +49,12 @@ const AppField: React.FC<AppFieldProps> = ({
 
 export default function Listing() {
   const { id = null } = useParams();
-  const listing = useAppSelector((state) => selectClaimedListingById(state, id))
+  const listing = useAppSelector((state) =>
+    selectClaimedListingById(state, id)
+  );
 
   if (!listing) {
-    return (
-      <Box>Listing was not found!</Box>
-    );
+    return <Box>Listing was not found!</Box>;
   }
 
   const initialValues: Submission = {
@@ -59,22 +68,18 @@ export default function Listing() {
           Request An Extension For {listing.name}
         </Typography>
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {}}
-        >
+        <Formik initialValues={initialValues} onSubmit={() => {}}>
           <Form>
             <AppField label="Name" name="listing.name" />
 
             <Box sx={{ mt: 3 }}>
-              <Typography variant="h6">
-                Mailing Address
-              </Typography>
+              <Typography variant="h6">Mailing Address</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <AppField
                     label="Address 1"
-                    name="listing.mailingAddress.address1"/>
+                    name="listing.mailingAddress.address1"
+                  />
                 </Grid>
                 <Grid item xs={3}>
                   <AppField
@@ -83,30 +88,19 @@ export default function Listing() {
                   />
                 </Grid>
                 <Grid item xs={2}>
-                  <AppField
-                    label="City"
-                    name="listing.mailingAddress.city"
-                  />
+                  <AppField label="City" name="listing.mailingAddress.city" />
                 </Grid>
                 <Grid item xs={2}>
-                  <AppField
-                    label="State"
-                    name="listing.mailingAddress.state"
-                  />
+                  <AppField label="State" name="listing.mailingAddress.state" />
                 </Grid>
                 <Grid item xs={2}>
-                  <AppField
-                    label="Zip"
-                    name="listing.mailingAddress.zip"
-                  />
+                  <AppField label="Zip" name="listing.mailingAddress.zip" />
                 </Grid>
               </Grid>
             </Box>
 
             <Box sx={{ mt: 3 }}>
-              <Typography variant="h6">
-                Physical Address
-              </Typography>
+              <Typography variant="h6">Physical Address</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <AppField
@@ -121,10 +115,7 @@ export default function Listing() {
                   />
                 </Grid>
                 <Grid item xs={2}>
-                  <AppField
-                    label="City"
-                    name="listing.physicalAddress.city"
-                  />
+                  <AppField label="City" name="listing.physicalAddress.city" />
                 </Grid>
                 <Grid item xs={2}>
                   <AppField
@@ -133,12 +124,14 @@ export default function Listing() {
                   />
                 </Grid>
                 <Grid item xs={2}>
-                  <AppField
-                    label="Zip"
-                    name="listing.physicalAddress.zip"
-                  />
+                  <AppField label="Zip" name="listing.physicalAddress.zip" />
                 </Grid>
               </Grid>
+            </Box>
+
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="h6">Reason of Extension</Typography>
+              <AppField label="Reason" name="reason" multiline minRows={3} />
             </Box>
 
             <Box sx={{ mt: 3 }}>
