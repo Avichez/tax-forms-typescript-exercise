@@ -6,7 +6,7 @@ export type User = {
   id: string;
   email: string;
   name: string;
-}
+};
 
 export type Address = {
   address1: string;
@@ -14,18 +14,31 @@ export type Address = {
   city: string;
   state: string;
   zip: string;
-}
+};
 
 export type Listing = {
   id: string;
   name: string;
   physicalAddress: Address;
   mailingAddress: Address | null;
-}
+};
 
 export type Submission = {
   id?: string;
   listing: Listing;
   createdAt?: string;
   reason?: string;
-}
+};
+
+export type ContactInformation = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+};
+
+export type Statement = {
+  id: string;
+  name: string;
+  contactInformation: ContactInformation;
+};
