@@ -38,7 +38,7 @@ export type ContactInformation = {
 };
 
 export type Statement = {
-  id: string;
+  id?: string;
   name: string;
   contactInformation: ContactInformation;
 };

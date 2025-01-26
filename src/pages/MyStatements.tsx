@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Box,
+  Button,
   Container,
   Paper,
   Table,
@@ -58,6 +60,12 @@ export default function MyStatements() {
             </TableBody>
           </Table>
         </TableContainer>
+
+        <Box sx={{ mt: 3 }}>
+          <Button component={Link} to="/statement/new" variant="contained">
+            Create Statement
+          </Button>
+        </Box>
       </Container>
     </Box>
   );
