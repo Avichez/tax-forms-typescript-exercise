@@ -44,7 +44,7 @@ export const loadStatements = () => {
   return Promise.resolve(statementsApiState as APIResponse<Statement>);
 };
 
-export const updateStatement = (updatedStatement: unknown) => {
+export const updateStatement = (updatedStatement: Statement) => {
   if (typeof updatedStatement !== "object" || !updatedStatement) {
     return Promise.reject("Invalid statement received");
   }
@@ -71,7 +71,7 @@ export const updateStatement = (updatedStatement: unknown) => {
   return Promise.resolve(updatedStatement);
 };
 
-export const createStatement = (newStatement: any) => {
+export const createStatement = (newStatement: Statement) => {
   if (typeof newStatement !== "object" || !newStatement) {
     return Promise.reject("Invalid statement received");
   }

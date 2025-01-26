@@ -27,6 +27,10 @@ const router = createBrowserRouter([
         element: <StatementForm />,
       },
       {
+        path: "statement/:id",
+        element: <StatementForm />,
+      },
+      {
         path: "listings",
         element: <Listings />,
       },

@@ -44,6 +44,7 @@ export default function MyStatements() {
                 <TableCell>Last Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone Number</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
 
@@ -55,6 +56,11 @@ export default function MyStatements() {
                   <TableCell>{statement.contactInformation.lastName}</TableCell>
                   <TableCell>{statement.contactInformation.email}</TableCell>
                   <TableCell>{statement.contactInformation.phoneNumber}</TableCell>
+                  <TableCell>
+                    <Button component={Link} to={`/statement/${statement.id}`}>
+                      Update
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
